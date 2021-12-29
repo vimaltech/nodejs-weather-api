@@ -10,6 +10,12 @@ class dbObject {
     const selCity = this.citylist.find(x => x.name === city);
     return  selCity;
   }  
+  getSearchByCity(keyWord) {
+    let search = `^${keyWord}`;
+    let regex = new RegExp(search, 'g');
+    const selCity = this.citylist.filter(x => regex.test(x.name));
+    return  selCity;
+  }  
 };
 
 module.exports = dbObject;

@@ -15,28 +15,38 @@ const appRouter = (app, fs, dataPath) => {
     });
   };
   
+  app.use ((req,res,next) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+      next();
+  })
+
   // READ
   app.route('/weather')
     .post((req, res) => {
-      res.setHeader('Content-Type', 'application/json');
       getWeatherData(req,res);
     })
     .get((req, res) => {
-      res.setHeader('Content-Type', 'application/json');
-      res.send({'error': 'no get method'});
+      getWeatherData(req,res);
     })
 
   const getWeatherData = (req, res) => {
+    console.log("in request..");
     readFile(data => {
       let gs = Object.assign(new db("db001"), data);
       if(req.query.citynames !== undefined) {
         res.send(gs.listCityNames());
       } else if(req.query.city !== undefined) {
         res.send(gs.getWetherByCity(req.query.city));
+      }else if(req.query.search !== undefined) {
+        res.send(gs.getSearchByCity(req.query.search));
       } else {
         res.send({'error': 'no data found'});
       }
     }, true);
+    console.log("out request....");
   }
 
   // const writeFile = (

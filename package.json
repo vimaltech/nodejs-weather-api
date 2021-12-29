@@ -4,11 +4,14 @@
   "description": "A simple JSON mock API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node index.js", 
+    "start": "node index.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "json-server": "^0.17.0",
     "node-json-db": "^1.4.1",
     "route": "^0.2.5"
